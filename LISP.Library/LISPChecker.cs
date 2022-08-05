@@ -1,24 +1,35 @@
-﻿namespace LISP.Library
+﻿using System.Text.RegularExpressions;
+
+namespace LISP.Library
 {
     public class LISPChecker
     {
         public static bool IsLispValid(string input)
         {
-            int openCount = input.Where(x => (x == '(')).Count();
-            int closedCount = input.Where(x => (x == ')')).Count();
-
+          
             //Exit early if open and closed parenthesis count doesn't match
-            if (closedCount != openCount) return false;
+            if (input.Where(x => (x == '(')).Count() != input.Where(x => (x == ')')).Count()) 
+                return false;
 
-            string inputStore = string.Empty;
-            while(input.Length != inputStore.Length)
+
+            //Remove the characters and leave the parentheses
+            string parentheses = string.Empty;
+            foreach (char c in input)
             {
-                inputStore = input;
-                input = input.Replace("()", string.Empty);
+                if (c == '(' || c == ')')
+                    parentheses += c;
             }
-            
 
-            return (input.Length==0);
+            //Remove each matching pair of parentheses.
+            //If all parentheses are closed correctly the parentheses string will be empty.
+            string lastString = string.Empty;
+            while(parentheses.Length != lastString.Length)
+            {
+                lastString = parentheses;
+                parentheses = parentheses.Replace("()", string.Empty);
+            }
+
+            return (parentheses.Length==0);
         }
     }
 }
