@@ -1,4 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿
+while (true)
+{
+    Console.WriteLine("Please Enter LISP Code:");
 
-Console.ReadLine();
+    string input = Console.ReadLine();
+
+    if (!string.IsNullOrEmpty(input))
+        Console.WriteLine(LISP.Library.LISPChecker.IsLispValid(input) ? "Valid" : "Invalid");
+
+}
+
